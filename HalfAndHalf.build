@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<project name="HalfAndHalf" default="build">
+
+  <property if="${not property::exists('archive')}"
+            name="archive" value="zip"/>
+  <property if="${not property::exists('debug')}"
+            name="debug" value="false"/>
+
+  <property name="project.name" value="HalfAndHalf"/>
+  <property name="project.basename" value="halfandhalf"/>
+  <property name="project.version" value="0.0.0"/>
+
+  <property name="source.dir" value="src/main"/>
+  <property name="test.dir" value="src/test"/>
+  <property name="build.dir" value="build"/>
+
+  <target name="build">
+    <mkdir dir="${build.dir}"/>
+    <csc target="library"
+	 output="${build.dir}/${project.name}.dll"
+	 debug="${debug}">
+      <sources>
+	<include name="${source.dir}/Cream/*.cs"/>
+      </sources>
+    </csc>
+  </target>
+
+  <target name="distcheck" depends="build">
+    <mkdir dir="${project.basename}-${project.version}"/>
+    <copy todir="${project.basename}-${project.version}">
+      <fileset basedir="${build.dir}">
+	<include name="*"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <target name="dist" depends="distcheck">
+    <tar if="${archive == 'tar.gz'}"
+	 destfile="${project.basename}-${project.version}.tar.gz"
+	 compression="GZip">
+      <fileset basedir="${project.basename}-${project.version}"
+	       prefix="${project.basename}-${project.version}">
+	<include name="*"/>
+      </fileset>
+    </tar>
+    <tar if="${archive == 'tar.bz2'}"
+	 destfile="${project.basename}-${project.version}.tar.bz2"
+	 compression="BZip2">
+      <fileset basedir="${project.basename}-${project.version}"
+	       prefix="${project.basename}-${project.version}">
+	<include name="*"/>
+      </fileset>
+    </tar>
+    <zip if="${archive == 'zip'}"
+	 zipfile="${project.basename}-${project.version}.zip">
+      <fileset basedir="${project.basename}-${project.version}"
+	       prefix="${project.basename}-${project.version}">
+	<include name="*"/>
+      </fileset>
+    </zip>
+    <delete dir="${project.basename}-${project.version}"/>
+  </target>
+
+  <target name="clean">
+    <delete dir="${build.dir}"/>
+  </target>
+
+</project>
