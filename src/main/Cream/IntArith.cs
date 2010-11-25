@@ -56,7 +56,12 @@ namespace  Cream
         {
         }
 
-        private IntArith(Network net, int a, Variable[] v, ConstraintTypes cType = ConstraintTypes.Hard)
+        private IntArith(Network net, int a, Variable[] v)
+            : this(net, a, v, ConstraintTypes.Hard, 0)
+        {
+        }
+
+        private IntArith(Network net, int a, Variable[] v, ConstraintTypes cType)
             : this(net, a, v, cType, 0)
         {
         }

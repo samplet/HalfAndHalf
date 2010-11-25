@@ -41,7 +41,12 @@ namespace  Cream
         {
         }
 
-        private IntFunc(Network net, int a, Variable[] v, ConstraintTypes cType = ConstraintTypes.Hard)
+        private IntFunc(Network net, int a, Variable[] v)
+            : this(net, a, v, ConstraintTypes.Hard, 0)
+        {
+        }
+
+        private IntFunc(Network net, int a, Variable[] v, ConstraintTypes cType)
             : this(net, a, v, cType, 0)
         {
         }

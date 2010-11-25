@@ -48,7 +48,12 @@ namespace Cream
 		{
 		}
 
-		private IntComparison(Network net, int comp, Variable[] v, ConstraintTypes cType = ConstraintTypes.Hard)
+		private IntComparison(Network net, int comp, Variable[] v)
+			: this(net, comp, v, ConstraintTypes.Hard, 0)
+		{
+		}
+
+		private IntComparison(Network net, int comp, Variable[] v, ConstraintTypes cType)
 			: this(net, comp, v, cType, 0)
 		{
 		}
